@@ -35,4 +35,4 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
           cd todo-list-fe
-          aws s3 sync ./build s3://todo-list-fe-bucket --delete
+          aws s3 sync ./dist s3://todo-list-fe-bucket --delete
