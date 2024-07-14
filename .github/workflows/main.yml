@@ -20,7 +20,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd todo-list-fe
           npm install
 
       - name: Build the project
@@ -35,5 +34,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          cd todo-list-fe
           aws s3 sync ./dist s3://todo-list-fe-bucket --delete
