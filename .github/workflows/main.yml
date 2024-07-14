@@ -20,14 +20,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd todo-list-fe
           npm install
 
       - name: Build the project
         env:
-          VITE_API_BASE_URL: http://localhost:8000/api
+          VITE_API_BASE_URL: http://todo-list-load-balancer-1292925265.ap-south-1.elb.amazonaws.com/api
         run: |
-          cd todo-list-fe
           npm run build
 
       - name: Deploy to S3
@@ -36,5 +34,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
         run: |
-          cd todo-list-fe
           aws s3 sync ./dist s3://todo-list-fe-bucket --delete
