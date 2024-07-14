@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import toDoListApi from '../api/toDoListApi';
 
 interface ToDo {
     id: number;
@@ -14,14 +14,13 @@ interface ToDoItemProps {
 }
 
 const ToDoItem: React.FC<ToDoItemProps> = ({ todo, setTodos }) => {
-    const handleDelete = () => {
-        axios.delete(`http://localhost:8000/api/todos/${todo.id}/`)
-            .then(() => {
-                setTodos(prevTodos => prevTodos.filter(t => t.id !== todo.id));
-            })
-            .catch(error => {
-                console.error('There was an error deleting the to-do item!', error);
-            });
+
+    const handleDelete = async () => {
+
+        const response = await toDoListApi.deleteToDo(todo.id);
+        if (response) {
+            setTodos(prevTodos => prevTodos.filter(t => t.id !== todo.id));
+        }
     };
 
     return (

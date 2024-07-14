@@ -1,13 +1,37 @@
-import axios from 'axios';
+import axiosInstance from "../config/axiosConfig";
 
-const apiUrl = import.meta.env.VITE_API_BASE_URL.concat("/todos");
+const apiUrl = import.meta.env.VITE_API_BASE_URL.concat("/todos/");
 
 const toDoListApi = {
 
     getAllToDoLists: async (params: any) => {
         try {
             const url = params ? `${apiUrl}?${params}` : apiUrl;
-            const response = await axios.get(url);
+            const response = await axiosInstance.get(url);
+            return response.data;
+        }
+        catch (error: any) {
+            console.error('Error fetching products:', error);
+            throw error; 
+        }
+    },
+
+    createToDo: async (payload: any) => {
+        try {
+            const url = apiUrl;
+            const response = await axiosInstance.post(url, payload);
+            return response.data;
+        }
+        catch (error: any) {
+            console.error('Error fetching products:', error);
+            throw error; 
+        }
+    },
+
+    deleteToDo: async (id: number) => {
+        try {
+            const url = `${apiUrl}/${id}`;
+            const response = await axiosInstance.delete(url);
             return response.data;
         }
         catch (error: any) {

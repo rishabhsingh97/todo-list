@@ -1,6 +1,5 @@
-// src/components/ToDoForm.tsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import toDoListApi from '../api/toDoListApi';
 
 interface ToDo {
     id: number;
@@ -17,7 +16,7 @@ const ToDoForm: React.FC<ToDoFormProps> = ({ setTodos }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const newToDo = {
@@ -26,16 +25,13 @@ const ToDoForm: React.FC<ToDoFormProps> = ({ setTodos }) => {
             completed: false,
         };
 
-        axios.post('http://localhost:8000/api/todos/', newToDo)
-            .then(response => {
-                setTodos(prevTodos => [...prevTodos, response.data]);
-                setTitle('');
-                setDescription('');
-            })
-            .catch(error => {
-                console.error('There was an error creating the to-do item!', error);
-            });
-    };
+        const response = await toDoListApi.createToDo(newToDo);
+        if (response) {
+            setTodos(prevTodos => [...prevTodos, response.data]);
+            setTitle('');
+            setDescription('');
+        }
+    }
 
     return (
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', marginBottom: '20px' }}>
