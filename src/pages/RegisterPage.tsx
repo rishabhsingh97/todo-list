@@ -1,80 +1,97 @@
-import React, { useState, FormEvent } from "react";
-import authApi from "../api/authApi";
+import React, { useState, FormEvent, ChangeEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import authApi from '../api/authApi';
+import StyledButton from '../components/ui/StyledButton';
+import Icons from '../components/Icons';
+import { useNotification } from '../context/NotificationContext';
+import InputBox from '../components/ui/Inputbox';
+import { useAuth } from '../context/AuthContext';
 
 const RegisterPage: React.FC = () => {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
     const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
+    const [confirmPasswordVisible, setConfirmPasswordVisible] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const { showNotification } = useNotification();
+    const navigate = useNavigate();
+    const { register } = useAuth();
 
     const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         if (password !== confirmPassword) {
-            setError("Passwords do not match.");
+            showNotification('Passwords do not match.', 'error');
             return;
         }
+
+        setIsSubmitting(true);
+
         try {
             const payload = {
                 username,
                 password
             };
-            const response = await authApi.register(payload);
-            if (response) {
-                let { user } = response;
-                if (user) {
-                    setError("");
-                    setSuccessMessage("Registration successful. You can now login.");
-                }
-                else {
-                    setError("Registration failed. Please try again.")
-                }
+
+            const registered = await register(payload);
+
+            if (registered) {
+                showNotification('Registration successful!', 'success');
+                navigate('/login');
             }
-        } catch (error) {
-            setError("Registration failed. Please try again.");
-            console.error("Registration failed", error);
+            else {
+                showNotification('Registration failed. Please try again.', 'error');
+            }
+        }
+        catch (error) {
+            showNotification('Registration failed. Please try again.', 'error');
+            console.error('Registration failed', error);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="confirmPassword">Confirm Password:</label>
-                    <input
-                        type="password"
-                        id="confirmPassword"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-                <button type="submit">Register</button>
-            </form>
-        </div>
+        <form className="authForm register" onSubmit={handleRegister}>
+            <h2 className="h2">Register at TodoList</h2>
+            <div>
+                <InputBox
+                    inputType="text"
+                    type="authLabel"
+                    value={username}
+                    name="name"
+                    placeholder="Name"
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+                />
+            </div>
+            <div>
+                <InputBox
+                    inputType={`${passwordVisible ? "text" : "password"}`}
+                    type="authLabel_password"
+                    value={password}
+                    name="password"
+                    placeholder="Password"
+                    icon={<Icons icon="eyeOpen" size="1rem" />}
+                    iconClick={() => setPasswordVisible(!passwordVisible)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                />
+            </div>
+            <div>
+                <InputBox
+                    inputType={`${confirmPasswordVisible ? "text" : "password"}`}
+                    type="authLabel"
+                    value={confirmPassword}
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    icon={<Icons icon="eyeOpen" size="1rem" />}
+                    iconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
+                />
+            </div>
+            <StyledButton submit={true} label="Register" disabled={!isSubmitting} />
+            <span>Already have an account ? <Link to="/login">Login</Link></span>
+        </form>
     );
 };
 

@@ -1,11 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { AppProvider } from "../context/AppContext"; 
+import { AuthProvider } from "../context/AuthContext";
+import { NotificationProvider } from "../context/NotificationContext";
 
 const ContextLayout: React.FC = () => {
     return (
-            <AppProvider>
+        <NotificationProvider>
+            <AuthProvider>
                 <Outlet />
-            </AppProvider>
+            </AuthProvider>
+        </NotificationProvider>
     );
 }
 

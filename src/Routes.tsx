@@ -1,20 +1,24 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import ContextLayout from "./layout/ContextLayout";
-import MainLayout from "./layout/MainLayout";
 import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
+import AuthLayout from "./layout/AuthLayout";
+import PrivateLayout from "./layout/PrivateLayout";
 import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import AddToDoCardPage from "./pages/AddToDoCardPage";
 
 export const mainRouter = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<ContextLayout />}>
-        <Route path="/" element={<MainLayout />}>
-          <Route index path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+        <Route path="/" element={<ContextLayout />}>
+            <Route path="/" element={<AuthLayout />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+            </Route>
+            <Route path="/" element={<PrivateLayout />}>
+                <Route index path="/home" element={<HomePage />} />
+                <Route index path="/addcard" element={<AddToDoCardPage />} />
+            </Route>
         </Route>
-      </Route>
     )
-  
-);
 
+);

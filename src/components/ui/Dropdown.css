@@ -1,0 +1,42 @@
+label {
+    display: block;
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1.5px solid lightgrey;
+    margin-top: 0.5rem;
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0px 0px 20px -18px;
+}
+
+.input:hover {
+    border: 2px solid lightgrey;
+    box-shadow: 0px 0px 20px -17px;
+}
+
+.input:active {
+    transform: scale(0.95);
+}
+
+.input:focus {
+    border: 2px solid grey;
+}
+
+.input-with-icon {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+}
+
+.input-icon {
+    margin-top: 0.5rem;
+    padding: 12px;
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+}

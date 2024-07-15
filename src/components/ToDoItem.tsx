@@ -24,12 +24,12 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ todo, setTodos }) => {
     };
 
     return (
-        <li style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
+        <div className='todoCard'>
             <h2>{todo.title}</h2>
             <p>{todo.description}</p>
             <p>{todo.completed ? 'Completed' : 'Not Completed'}</p>
             <button onClick={handleDelete} style={{ color: 'red' }}>Delete</button>
-        </li>
+        </div>
     );
 };
 

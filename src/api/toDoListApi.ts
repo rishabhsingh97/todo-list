@@ -12,7 +12,7 @@ const toDoListApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null; 
         }
     },
 
@@ -24,7 +24,7 @@ const toDoListApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null; 
         }
     },
 
@@ -36,7 +36,7 @@ const toDoListApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null; 
         }
     }
 }

@@ -12,7 +12,7 @@ const authApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null;
         }
     },
     register: async (payload: any) => {
@@ -23,7 +23,7 @@ const authApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null;
         }
     },
     refreshToken: async (payload: any) => {
@@ -35,7 +35,7 @@ const authApi = {
         }
         catch (error: any) {
             console.error('Error fetching products:', error);
-            throw error; 
+            return null;
         }
     },
 }

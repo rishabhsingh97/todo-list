@@ -1,12 +1,32 @@
-import React, { useState, FormEvent } from "react";
-import authApi from "../api/authApi";
+import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import authApi from "../api/authApi";
+import InputBox from "../components/ui/Inputbox";
+import StyledButton from "../components/ui/StyledButton";
+import { Link } from "react-router-dom";
+import { useNotification } from "../context/NotificationContext";
+import Icons from "../components/Icons";
+import { useAuth } from "../context/AuthContext";
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const [error, setError] = useState<string | null>(null);
+    const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
     const navigate = useNavigate();
+
+    const { showNotification } = useNotification();
+    const { login } = useAuth();
+
+    useEffect(() => {
+        if (username && password) {
+            setIsSubmitting(true);
+        }
+        else {
+            setIsSubmitting(false);
+        }
+    }, [username, password]);
 
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -15,47 +35,50 @@ const LoginPage: React.FC = () => {
                 username,
                 password,
             };
-            const response = await authApi.login(payload);
-            if (response) {
-                const { access, refresh } = response;
-                localStorage.setItem("access_token", access);
-                localStorage.setItem("refresh_token", refresh);
-                navigate("/");
+
+            const loggedIn = await login(payload);
+            if (loggedIn) {
+                showNotification("login successfull", "success");
+                navigate("/home");
             }
-        } catch (error) {
-            setError('Invalid credentials. Please try again.');
+        }
+        catch (error) {
+            showNotification("Invalid credentials, please try again", "error");
             console.error('Login failed', error);
         }
     };
 
     return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+        <>
+            <form className="authForm login" onSubmit={handleLogin}>
+                <h2 className="h2">Log in to ToDo List</h2>
                 <div>
-                    <label htmlFor="username">Username:</label>
-                    <input
-                        type="text"
-                        id="username"
+                    <InputBox
+                        inputType="text"
+                        type="authLabel"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
+                        name="username"
+                        placeholder="username"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
                     />
                 </div>
                 <div>
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
+                    <InputBox
+                        inputType={`${passwordVisible ? "text" : "password"}`}
+                        type="authLabel_password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
+                        name="password"
+                        placeholder="Password"
+                        icon={<Icons icon="eyeOpen" size="1rem" />}
+                        iconClick={() => setPasswordVisible(!passwordVisible)}
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                     />
                 </div>
-                {error && <p>{error}</p>}
-                <button type="submit">Login</button>
-            </form>
-        </div>
+                <StyledButton submit={true} label="Login" disabled={!isSubmitting} />
+
+                    <span>Don't have account? <Link to="/register">Register</Link></span>
+            </form >
+        </>
     );
 };
 
