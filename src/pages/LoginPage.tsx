@@ -1,6 +1,5 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import authApi from "../api/authApi";
 import InputBox from "../components/ui/Inputbox";
 import StyledButton from "../components/ui/StyledButton";
 import { Link } from "react-router-dom";

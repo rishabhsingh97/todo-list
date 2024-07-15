@@ -3,8 +3,6 @@ import toDoListApi from "../api/toDoListApi";
 import Loading from "../components/Loading";
 import ToDoItem from "../components/ToDoItem";
 import CardEffect from "../components/card";
-import Icons from "../components/Icons";
-import { Link } from "react-router-dom";
 
 interface ToDo {
     id: number;
