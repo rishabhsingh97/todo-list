@@ -1,11 +1,11 @@
-label {
+.label {
     display: block;
     margin: 1rem 0;
-    width: 100%;
 }
 
-.input {
+.textarea {
     width: 100%;
+    height: 200px;
     padding: 12px;
     border-radius: 12px;
     border: 1.5px solid lightgrey;
@@ -15,28 +15,15 @@ label {
     box-shadow: 0px 0px 20px -18px;
 }
 
-.input:hover {
+.textarea:hover {
     border: 2px solid lightgrey;
     box-shadow: 0px 0px 20px -17px;
 }
 
-.input:active {
+.textarea:active {
     transform: scale(0.95);
 }
 
-.input:focus {
+.textarea:focus {
     border: 2px solid grey;
-}
-
-.input-with-icon {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-}
-
-.input-icon {
-    margin-top: 0.5rem;
-    padding: 12px;
-    border-radius: 12px;
-    background-color: rgba(0, 0, 0, 1);
-    color: white;
 }

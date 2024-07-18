@@ -5,7 +5,7 @@ import AuthLayout from "./layout/AuthLayout";
 import PrivateLayout from "./layout/PrivateLayout";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import AddToDoCardPage from "./pages/AddToDoCardPage";
+import AddUpdateToDoCardPage from "./pages/AddUpdateToDoCardPage";
 
 export const mainRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -17,7 +17,7 @@ export const mainRouter = createBrowserRouter(
             </Route>
             <Route path="/" element={<PrivateLayout />}>
                 <Route index path="/home" element={<HomePage />} />
-                <Route path="/addcard" element={<AddToDoCardPage />} />
+                <Route path="/todo/:id" element={<AddUpdateToDoCardPage />} />
             </Route>
         </Route>
     )

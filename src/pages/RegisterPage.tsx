@@ -79,17 +79,17 @@ const RegisterPage: React.FC = () => {
             <div>
                 <InputBox
                     inputType={`${confirmPasswordVisible ? "text" : "password"}`}
-                    type="authLabel"
+                    type="authLabel_password"
                     value={confirmPassword}
-                    name="confirmPassword"
+                    name="confirm password"
                     placeholder="Confirm Password"
                     icon={<Icons icon="eyeOpen" size="1rem" />}
                     iconClick={() => setConfirmPasswordVisible(!confirmPasswordVisible)}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
                 />
             </div>
-            <StyledButton submit={true} label="Register" disabled={!isSubmitting} />
-            <span>Already have an account ? <Link to="/login">Login</Link></span>
+            <StyledButton submit label="Register" disabled={isSubmitting} />
+            <span>Already have an account? <Link to="/login">Login</Link></span>
         </form>
     );
 };

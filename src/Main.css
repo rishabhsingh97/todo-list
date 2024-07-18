@@ -14,15 +14,21 @@ body,
     background-color: rgb(230, 230, 230);
 }
 
+h1,h2,h3 {
+    padding: 0.5rem;
+}
 body {
-    overflow-y: scroll;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
-h2 {
-    padding: 1rem 0;
+#root {
+    overflow-y: scroll;
+}
+
+a {
+    text-decoration: inherit;
 }
 
 .authForm {
@@ -43,7 +49,7 @@ h2 {
 .toast {
     position: absolute;
     right: 20px;
-    top: 20px;
+    top: 80px;
     overflow: hidden;
     width: 0;
     width: 100%;
@@ -74,6 +80,10 @@ h2 {
 }
 
 /* todo_card */
+
+.container {
+    margin-top: 100px;
+}
 
 .cardGrid {
     display: grid;
@@ -140,9 +150,10 @@ h2 {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* todo add screen */
 .toDoAddBox {
     height: 100%;
     width: 100%;
@@ -154,4 +165,47 @@ h2 {
 .toDoAddBox > form {
     max-width: 500px;
     width: 100%;
+}
+
+.createdAt {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 0.5rem;
+}
+
+.completionIcon {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.completion-checkbox {
+    display: none;
+}
+
+.completion-checkbox + label {
+    cursor: pointer;
+}
+
+.completion-checkbox:checked + label + svg {
+    color: green;
+}
+
+.completion-checkbox:not(:checked) + label + svg {
+    color: red;
+}
+
+.comp-label {
+    font-size: 0.8rem;
+    font-style: italic;
+    text-decoration: underline;
+    color: blue;
+    font-weight: bold;
+}
+
+/* fixed input color on input page*/
+.toDoAddBox > form > label:first-child {
+    background-color: white;
 }

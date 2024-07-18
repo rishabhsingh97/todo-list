@@ -13,6 +13,7 @@ const AuthLayout: React.FC = () => {
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/home');
+            return;
         }
         else {
             setLoading(false);

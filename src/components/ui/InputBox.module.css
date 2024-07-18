@@ -17,9 +17,11 @@
     right: 0;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .label>.input {
+    width: 100%;
     background-color: transparent;
     outline: none;
     border: none;

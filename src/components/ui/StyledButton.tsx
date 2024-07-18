@@ -1,27 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./StyledButton.css";
+import styles from "./StyledButton.module.css";
 
 interface StyledButtonProps {
     label: string;
     href?: string;
-    type?: "primary" | "secondry";
-    submit?: boolean
-    onClick?: any;
+    type?: "primary" | "secondary" | "warning";
+    submit?: boolean;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
     disabled?: boolean;
 }
 
-const StyledButton: React.FC<StyledButtonProps> = ({ label, href, type, onClick, submit, disabled = false }) => {
+const StyledButton: React.FC<StyledButtonProps> = ({ 
+    label, 
+    href, 
+    type = "primary", 
+    onClick, 
+    submit = false, 
+    disabled = false 
+}) => {
     if (href) {
         return (
-            <Link className={`button ${type} ${disabled ? "disabled" : ""}`} to={disabled ? "#" : href}>
+            <Link className={`${styles.button} ${styles[type]} ${disabled ? styles.disabled : ""}`} to={disabled ? "#" : href}>
                 {label}
             </Link>
         );
-    }
-    else {
+    } else {
         return (
-            <button type={submit ? "submit" : "button"} className={`button ${type}${disabled ? "disabled" : ""}`} onClick={onClick} disabled={disabled}>
+            <button 
+                type={submit ? "submit" : "button"} 
+                className={`${styles.button} ${styles[type]} ${disabled ? styles.disabled : ""}`} 
+                onClick={onClick} 
+                disabled={disabled}
+            >
                 {label}
             </button>
         );

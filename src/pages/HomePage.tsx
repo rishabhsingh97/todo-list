@@ -9,25 +9,26 @@ interface ToDo {
     title: string;
     description: string;
     completed: boolean;
+    created_at: Date;
 }
 
 const HomePage: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [todos, setTodos] = useState<ToDo[]>([]);
 
-    useEffect(() => {
-        const fetchToDoLists = async () => {
-            try {
-                const response = await toDoListApi.getAllToDoLists(null);
-                setTodos(response || []);
-                setLoading(false);
-            }
-            catch (error) {
-                console.error("Error fetching product:", error);
-                setLoading(false);
-            }
-        };
+    const fetchToDoLists = async () => {
+        try {
+            const response = await toDoListApi.getAllToDoLists(null);
+            setTodos(response || []);
+            setLoading(false);
+        }
+        catch (error) {
+            console.error("Error fetching product:", error);
+            setLoading(false);
+        }
+    };
 
+    useEffect(() => {
         fetchToDoLists();
     }, []);
 
@@ -36,8 +37,9 @@ const HomePage: React.FC = () => {
             <Loading />
         )
     }
+
     return (
-        <div>
+        <div className="container">
             <div className="cardGrid">
                 {todos && todos.map((todo, index) => (
                     <div key={index}>

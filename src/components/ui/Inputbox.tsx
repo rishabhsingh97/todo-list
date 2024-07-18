@@ -19,9 +19,6 @@ const InputBox: React.FC<InputBoxProps> = ({ type, inputType, name, value, onCha
         case "authLabel": {
             return (
                 <label className={styles.label}>
-                    <span className={styles.icon}>
-                        {icon}
-                    </span>
                     <input
                         name={name}
                         type={inputType}

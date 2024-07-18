@@ -1,5 +1,5 @@
 import React from 'react';
-import './TextArea.css';
+import styles from './TextArea.module.css';
 
 interface TextAreaProps {
     label?: string;
@@ -11,14 +11,14 @@ interface TextAreaProps {
 
 const TextArea: React.FC<TextAreaProps> = ({ label, name, value, onChange, placeholder }) => {
     return (
-        <label>
+        <label className={styles.label}>
             {label && <span>{label}</span>}
             <br />
             <textarea
                 name={name}
                 value={value}
                 onChange={onChange}
-                className="textarea"
+                className={styles.textarea}
                 placeholder={placeholder}
             />
         </label>

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const axiosInstance = axios.create();
 
@@ -14,5 +15,18 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+axiosInstance.interceptors.response.use(
+  response => response,
+  async error => {
+      const { status } = error.response;
+      if (status === 401) {
+          const auth = useAuth();
+          auth.logout();
+      }
+      return Promise.reject(error);
+  }
+);
+
 
 export default axiosInstance;
