@@ -79,11 +79,11 @@ const ToDoItem: React.FC<ToDoItemProps> = ({ todo, setTodos }) => {
             <StyledButton onClick={viewTodo} label="View" type="secondary" />
             <StyledButton onClick={handleDelete} label="Delete" type="warning" />
             <div className='completionIcon'>
-                <input id="completion-check" type="checkbox" className="completion-checkbox" checked={completed} onChange={handleCheckboxChange} />
+                <input id={`comp-check-${todo.id}`} type="checkbox" className="completion-checkbox" checked={completed} onChange={handleCheckboxChange} />
                 {completed ?
-                    <label className="comp-label" htmlFor='completion-check'>mark as incomplete!</label>
+                    <label className="comp-label" htmlFor={`comp-check-${todo.id}`}>mark as incomplete!</label>
                     :
-                    <label className="comp-label" htmlFor='completion-check'>mark as complete!</label>
+                    <label className="comp-label" htmlFor={`comp-check-${todo.id}`}>mark as complete!</label>
                 }
             </div>
         </div>
