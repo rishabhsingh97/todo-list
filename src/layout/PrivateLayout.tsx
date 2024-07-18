@@ -5,7 +5,6 @@ import Loading from "../components/Loading";
 
 import styles from "./PrivateLayout.module.css";
 import { Link } from "react-router-dom";
-import Icons from "../components/Icons";
 
 const PrivateLayout: React.FC = () => {
 
