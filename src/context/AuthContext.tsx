@@ -38,7 +38,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
           if (decodedToken.exp < Date.now() / 1000) {
             try {
               const refreshed = await authApi.refreshToken({ refresh: refresh_token });
-              console.log("refesh ", refreshed);
               if (refreshed?.access && refreshed?.refresh) {
                 localStorage.setItem('access_token', refreshed.access);
                 localStorage.setItem('refresh_token', refreshed.refresh);
